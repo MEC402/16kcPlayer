@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.filedialog
 import cv2
+import decoder
 
 video_path = "video.mp4"
 
@@ -8,6 +9,7 @@ canvas_width = 800
 canvas_height =700
 
 master = tk.Tk()
+doub = tk.Tk()
 
 def browse():
 	global video_path 
@@ -15,17 +17,7 @@ def browse():
 
 
 def play():
-	print(video_path)
-	cap = cv2.VideoCapture(video_path)
-	frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-	frame_heigth = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-	frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-	for _ in range(0, frame_count):
-		_, frame = cap.read()
-		frame = cv2.resize(frame, (int(canvas_width),int(canvas_height)))
-		cv2.imshow(video_path, frame)
-		cv2.waitKey(30)
-	cv2.destroyAllWindows()
+	decoder.decode_file(video_path)
 
 browse_button = tk.Button(master, text="Browse", command=browse)
 browse_button.grid(row=0, column=0)
